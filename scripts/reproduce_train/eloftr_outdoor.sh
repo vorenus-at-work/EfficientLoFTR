@@ -8,12 +8,15 @@ export PYTHONPATH=$PROJECT_DIR:$PYTHONPATH
 cd $PROJECT_DIR
 
 # to reproduced the results in our paper, please use:
+# changed by vorenus
 TRAIN_IMG_SIZE=832
+#TRAIN_IMG_SIZE=256
+
 
 n_nodes=1
-n_gpus_per_node=4
-torch_num_workers=4
-batch_size=5
+n_gpus_per_node=2
+torch_num_workers=8
+batch_size=2
 pin_memory=true
 
 DEFAULT_EXP_NAME=''

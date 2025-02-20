@@ -1,3 +1,4 @@
+#%%
 import pytorch_lightning as pl
 import argparse
 import pprint
@@ -10,7 +11,8 @@ from src.lightning.data import MultiSceneDataModule
 from src.lightning.lightning_loftr import PL_LoFTR
 
 import torch
-
+import pdb # Import pdb for debugging
+#%%
 def parse_args():
     # init a costum parser which will be added into pl.Trainer parser
     # check documentation: https://pytorch-lightning.readthedocs.io/en/latest/common/trainer.html#trainer-flags
@@ -140,4 +142,6 @@ if __name__ == '__main__':
     trainer = pl.Trainer.from_argparse_args(args, replace_sampler_ddp=False, logger=False)
 
     loguru_logger.info(f"Start testing!")
+    # Add a breakpoint here
+    #pdb.set_trace()
     trainer.test(model, datamodule=data_module, verbose=False)

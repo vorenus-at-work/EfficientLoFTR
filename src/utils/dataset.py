@@ -104,7 +104,9 @@ def read_megadepth_gray(path, resize=None, df=None, padding=False, augment_fn=No
     """
     # read image
     image = imread_gray(path, augment_fn, client=MEGADEPTH_CLIENT)
-
+    if image is None:
+        logger.warning(f"Image loading failure: {path}")
+        return None, None, None
     # resize image
     w, h = image.shape[1], image.shape[0]
     w_new, h_new = get_resized_wh(w, h, resize)

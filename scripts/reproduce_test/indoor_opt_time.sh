@@ -2,7 +2,15 @@
 SCRIPTPATH=$(dirname $(readlink -f "$0"))
 PROJECT_DIR="${SCRIPTPATH}/../../"
 
-export PYTHONPATH=$PROJECT_DIR:$PYTHONPATH
+# Check if PYTHONPATH is set, if not, initialize it with the project directory
+if [ -z "$PYTHONPATH" ]; then
+    export PYTHONPATH=$PROJECT_DIR
+else
+    export PYTHONPATH=$PROJECT_DIR:$PYTHONPATH
+fi
+
+echo "PYTHONPATH: $PYTHONPATH"  # Print the PYTHONPATH for verification
+
 cd $PROJECT_DIR
 
 main_cfg_path="configs/loftr/eloftr_optimized.py"

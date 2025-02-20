@@ -1,7 +1,11 @@
 import bisect
 import numpy as np
-import matplotlib.pyplot as plt
+# revised by vorenus
+#import matplotlib.pyplot as plt
+#import matplotlib
 import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 import torch
 
@@ -73,14 +77,18 @@ def _make_evaluation_figure(data, b_id, alpha='dynamic'):
     img0 = (data['image0'][b_id][0].cpu().numpy() * 255).round().astype(np.int32)
     img1 = (data['image1'][b_id][0].cpu().numpy() * 255).round().astype(np.int32)
     kpts0 = data['mkpts0_f'][b_mask].cpu().numpy()
-    kpts1 = data['mkpts1_f'][b_mask].cpu().numpy()
+    # revised by vorenus
+    kpts1 = data['mkpts1_f'][b_mask].cpu().detach().numpy()
+    #kpts1 = data['mkpts1_f'][b_mask].cpu().numpy()
     
     # for megadepth, we visualize matches on the resized image
     if 'scale0' in data:
         kpts0 = kpts0 / data['scale0'][b_id].cpu().numpy()[[1, 0]]
         kpts1 = kpts1 / data['scale1'][b_id].cpu().numpy()[[1, 0]]
+    # revised by vorenus
+    #epi_errs = data['epi_errs'][b_mask].cpu().numpy()
+    epi_errs = data['epi_errs'][b_mask].cpu().detach().numpy()
 
-    epi_errs = data['epi_errs'][b_mask].cpu().numpy()
     correct_mask = epi_errs < conf_thr
     precision = np.mean(correct_mask) if len(correct_mask) > 0 else 0
     n_correct = np.sum(correct_mask)

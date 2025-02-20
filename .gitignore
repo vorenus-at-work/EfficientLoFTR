@@ -9,4 +9,5 @@ tmp.*
 
 logs/
 weights/
+data/
 dump/
