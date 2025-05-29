@@ -138,3 +138,22 @@ if __name__ == "__main__":
     print("COCO: Training an object detector or instance segmentation model")
     print("MegaDepth: Training a monocular depth estimation model")
 # %%
+def static_vars(**kwargs):
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])  # Attach static variables to the function
+        return func
+    return decorate
+
+
+@static_vars(counter=0)
+def my_function():
+    my_function.counter += 1  # Access the static variable
+    print(f"Function called {my_function.counter} times")
+
+my_function()  # Function called 1 times
+my_function()  # Function called 2 times
+my_function()  # Function called 3 times
+
+
+# %%
